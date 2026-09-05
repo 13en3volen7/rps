@@ -5,3 +5,7 @@ function getComputerChoice() {
         case 2: return "scissor";
     };
 }
+
+function getHumanChoice() {
+    return prompt("Enter your choice:").toLowerCase();
+}
