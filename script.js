@@ -6,10 +6,6 @@ function getComputerChoice() {
     };
 }
 
-function getHumanChoice() {
-    return prompt("Enter your choice:").toLowerCase();
-}
-
 function playGame() {
     let humanScore = 0;
     let computerScore = 0;
@@ -48,11 +44,13 @@ function playGame() {
         }
     }
 
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
+    const choices = document.querySelector(".choices");
+    choices.addEventListener("click", (e) => {
+        const target = e.target;
+        const humanSelection = target.textContent;
         const computerSelection = getComputerChoice();
         playRound(humanSelection, computerSelection);
-    }
+    });
 
     if (humanScore === computerScore) {
         console.log(`The game has ended in a tie!`);
