@@ -7,9 +7,6 @@ function getComputerChoice() {
 }
 
 function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-
     function getRoundWinner(humanChoice, computerChoice) {
         if (humanChoice === "rock") {
             switch (computerChoice) {
@@ -33,18 +30,23 @@ function playGame() {
     }
 
     const choices = document.querySelector(".choices");
+    const humanScore = document.querySelector(".human > .score");
+    const computerScore = document.querySelector(".computer > .score");
     choices.addEventListener("click", (e) => {
         const target = e.target;
         const humanSelection = target.textContent.toLowerCase();
         const computerSelection = getComputerChoice();
         const currentRoundWinner = getRoundWinner(humanSelection, computerSelection);
-    });
+        switch (currentRoundWinner) {
+            case "human":
+                +humanScore.textContent++;
+                break;
 
-    if (humanScore === computerScore) {
-        console.log(`The game has ended in a tie!`);
-    } else {
-        console.log(`The game has ended! The winner is ${(humanScore > computerScore) ? "human" : "computer"}!`);
-    }
+            case "computer":
+                +computerScore.textContent++;
+                break;
+        }
+    });
 }
 
 playGame();
