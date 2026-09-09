@@ -6,6 +6,10 @@ function getComputerChoice() {
     };
 }
 
+function toTitle(string) {
+    return string[0].toUpperCase() + string.slice(1);
+}
+
 function playGame() {
     function getRoundWinner(humanChoice, computerChoice) {
         if (humanChoice === "rock") {
@@ -29,9 +33,26 @@ function playGame() {
         }
     }
 
+    function updateRoundInformation(roundInfo, humanChoice, computerChoice, currentRoundWinner, endGame) {
+        roundInfo.textContent = `
+        Human chose ${toTitle(humanChoice)} while Computer chose ${toTitle(computerChoice)}. 
+        `;
+        
+        if (!endGame) {
+            if (currentRoundWinner === "none") {
+                roundInfo.textContent += "It's a tie, so no one won this round.";
+            } else {
+                roundInfo.textContent += `${toTitle(currentRoundWinner)} won this round!`;
+            }
+        } else {
+            roundInfo.textContent +=  `${toTitle(currentRoundWinner)} has won the game!`;
+        }
+    }
+
     const choices = document.querySelector(".choices");
     const humanScore = document.querySelector(".human > .score");
     const computerScore = document.querySelector(".computer > .score");
+    const roundInfo = document.querySelector(".round-info");
     choices.addEventListener("click", (e) => {
         const target = e.target;
         const humanSelection = target.textContent.toLowerCase();
@@ -40,10 +61,16 @@ function playGame() {
         switch (currentRoundWinner) {
             case "human":
                 +humanScore.textContent++;
+                updateRoundInformation(roundInfo, humanSelection, computerSelection, currentRoundWinner, +humanScore.textContent === 5);
                 break;
 
             case "computer":
                 +computerScore.textContent++;
+                updateRoundInformation(roundInfo, humanSelection, computerSelection, currentRoundWinner, +computerScore.textContent === 5);
+                break;
+
+            default:
+                updateRoundInformation(roundInfo, humanSelection, computerSelection, currentRoundWinner, false);
                 break;
         }
     });
