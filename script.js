@@ -47,7 +47,7 @@ function playGame() {
     const choices = document.querySelector(".choices");
     choices.addEventListener("click", (e) => {
         const target = e.target;
-        const humanSelection = target.textContent;
+        const humanSelection = target.textContent.toLowerCase();
         const computerSelection = getComputerChoice();
         playRound(humanSelection, computerSelection);
     });
