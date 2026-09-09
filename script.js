@@ -45,8 +45,15 @@ function playGame() {
                 roundInfo.textContent += `${toTitle(currentRoundWinner)} won this round!`;
             }
         } else {
-            roundInfo.textContent +=  `${toTitle(currentRoundWinner)} has won the game!`;
+            roundInfo.textContent +=  `
+            The game has ended and the winner is ${toTitle(currentRoundWinner)}!`;
         }
+    }
+
+    function resetGame(humanScore, computerScore, roundInfo) {
+        humanScore.textContent = 0;
+        computerScore.textContent = 0;
+        roundInfo.textContent = "";
     }
 
     const choices = document.querySelector(".choices");
@@ -56,6 +63,13 @@ function playGame() {
     choices.addEventListener("click", (e) => {
         const target = e.target;
         const humanSelection = target.textContent.toLowerCase();
+        if (humanSelection === "reset") {
+            resetGame(humanScore, computerScore, roundInfo);
+            return;
+        }
+        if (+humanScore.textContent === 5 || +computerScore.textContent === 5) {
+            return;
+        }
         const computerSelection = getComputerChoice();
         const currentRoundWinner = getRoundWinner(humanSelection, computerSelection);
         switch (currentRoundWinner) {
