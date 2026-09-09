@@ -10,36 +10,24 @@ function playGame() {
     let humanScore = 0;
     let computerScore = 0;
 
-    function playRound(humanChoice, computerChoice) {
+    function getRoundWinner(humanChoice, computerChoice) {
         if (humanChoice === "rock") {
-            if (computerChoice === "paper") {
-                computerScore++;
-                console.log("You lose! Paper beats Rock");
-            } else if (computerChoice === "scissor") {
-                humanScore++;
-                console.log("You win! Rock beats Scissor");
-            } else {
-                console.log("Tie! Both chose Rock");
+            switch (computerChoice) {
+                case "paper": return "computer";
+                case "scissor": return "human";
+                case "rock": return "none";
             }
         } else if (humanChoice === "paper") {
-            if (computerChoice === "scissor") {
-                computerScore++;
-                console.log("You lose! Scissor beats Paper");
-            } else if (computerChoice === "rock") {
-                humanScore++;
-                console.log("You win! Paper beats Rock");
-            } else {
-                console.log("Tie! Both chose Paper");
+            switch (computerChoice) {
+                case "scissor": return "computer";
+                case "rock": return "human";
+                case "paper": return "none";
             }
-        } else if (humanChoice === "scissor") {
-            if (computerChoice === "rock") {
-                computerScore++;
-                console.log("You lose! Rock beats Scissor");
-            } else if (computerChoice === "paper") {
-                humanScore++;
-                console.log("You win! Scissor beats Paper");
-            } else {
-                console.log("Tie! Both chose Paper");
+        } else {
+            switch (computerChoice) {
+                case "rock": return "computer";
+                case "paper": return "human";
+                case "scissor": return "none";
             }
         }
     }
@@ -49,7 +37,7 @@ function playGame() {
         const target = e.target;
         const humanSelection = target.textContent.toLowerCase();
         const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
+        const currentRoundWinner = getRoundWinner(humanSelection, computerSelection);
     });
 
     if (humanScore === computerScore) {
